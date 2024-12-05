@@ -18,4 +18,4 @@ router.delete('/teacher/delete',(req,res)=>{
     res.send("Deleting the details");
 });
 
-exports.Router=router;
+module.exports=router;
