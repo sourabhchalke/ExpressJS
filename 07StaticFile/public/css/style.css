@@ -1,0 +1,123 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+:root {
+    --font1: 'Dosis', sans-serif;
+    --font2: 'Merriweather', serif;
+    --font3: 'PT Serif', serif;
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+a:hover{
+    color: bisque;
+}
+button:hover{
+    background-color: #BE9C79;
+}
+.coffee-heaven{
+    font-family: var(--font2);
+}
+.text{
+    font-family: var(--font3);
+}
+h5{
+    font-family: var(--font2);
+}
+h2{
+    font-family: var(--font1);
+}
+h3{
+    font-family: var(--font3);
+}
+p{
+    font-family: var(--font1);
+}
+.nav-bg{
+    font-family: var(--font2);
+}
+.carousel-inner .img1,
+.img2,
+.img3 {
+    height: 550px;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.carousel-inner .img1 {
+    background-image: url(../images/background/home-3-slider-image-1.jpg);
+}
+.carousel-inner .img2 {
+    background-image: url(../images/background/home-3-slider-image-2.jpg);
+}
+.carousel-inner .img3 {
+    background-image: url(../images/background/home-3-slider-image-3-new.jpg);
+}
+.shop-btn {
+    background-color: transparent;
+    color: white;
+}
+.owl-carousel-img {
+    background: url(../images/background/h3-img-3.jpg) center;
+    height: 550px;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.over-img {
+    margin: 150px 0px 0px 0px;
+}
+.coffee-product .overlay-img {
+    background: url(../images/background/h3-img-2.jpg);
+    height: 500px;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.coffee-img1 {
+    background-image: url(../images/background/h3-img-4.jpg);
+    height: 600px;
+    background-position: left;
+    background-size: cover;
+}
+.coffee-img1 .card-img-overlay {
+    margin: 0% 20%;
+}
+.coffee-img2 {
+    background-image: url(../images/background/h3-img-5.jpg);
+    height: 600px;
+    background-position: left;
+    background-size: cover;
+}
+.client-img1:hover {
+    content: url(../images/background/h3-client-img-hover-1.png);
+}
+.client-img2:hover {
+    content: url(../images/background/h3-client-img-hover-2.png);
+}
+.client-img3:hover {
+    content: url(../images/background/h3-client-img-hover-3.png);
+}
+.client-img4:hover {
+    content: url(../images/background/h3-client-img-hover-4.png);
+}
+.client-img5:hover {
+    content: url(../images/background/h3-client-img-hover-5.png);
+}
+.client-img6:hover {
+    content: url(../images/background/h3-client-img-hover-6.png);
+}
+.footer {
+    background-image: url(../images/background/footer-top-img-1.jpg);
+    height: 600px;
+}
+.email {
+    background-color: transparent;
+}
+.last-row,
+.nav-bg {
+    background-color: #121212;
+    font-family: var(--font2);
+}
