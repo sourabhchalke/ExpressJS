@@ -13,7 +13,7 @@ app.get('/',async(req,res,next)=>{
     
     try{
         const data= await fetchData();
-        res.send(data);
+        res.send(dat);
     }catch(err){
         console.log("Something went wrong");
         next(err);
