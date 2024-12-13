@@ -12,10 +12,11 @@ function fetchData(){
 
 app.get('/', async(req,res)=>{
     try{
-        const dat = await fetchData();
+        const data = await fetchData();
         res.send(data);
     }catch(err){
         res.status(500).send("Something went wrong");
     }
 })
+
 app.listen(8017);
