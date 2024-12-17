@@ -15,8 +15,16 @@ async function getData(){
     console.log(response);
 }
 
-getData().then((res)=>{
-    res.find().toArray().then((data)=>{
-        console.log(data);
-    })
-});
+// getData().then((res)=>{
+//     res.find().toArray().then((data)=>{
+//         console.log(data);
+//     })
+// });
+
+const findData=async()=>{
+    let data = await getData();
+    data = await data.find().toArray();
+    console.log(data);
+}
+
+findData();
