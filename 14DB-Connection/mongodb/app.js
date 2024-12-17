@@ -11,7 +11,12 @@ async function getData(){
     const collection = db.collection("players");
     // const response = await collection.find().toArray();
 
+    return collection;
     console.log(response);
 }
 
-getData();
+getData().then((res)=>{
+    res.find().toArray().then((data)=>{
+        console.log(data);
+    })
+});
