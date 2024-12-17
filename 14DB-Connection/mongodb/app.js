@@ -15,6 +15,7 @@ const dbConnect=require('./mongodb.js');
 
 // findData(); 
 
+//Getting Data from database
 async function fetchData() {
     try {
         let collection = await dbConnect();
@@ -23,8 +24,10 @@ async function fetchData() {
     } catch (error) {
         console.error("Error fetching data:", error);
     } finally {
-       console.log("Completed...") // Exit the process after fetching data
+       console.log("Completed...") ;
     }
 }
 
 fetchData();
+
+
