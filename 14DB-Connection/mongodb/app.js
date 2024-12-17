@@ -1,30 +1,30 @@
-const {MongoClient}=require('mongodb');
+const dbConnect=require('./mongodb.js');
 
-const uri="mongodb://localhost:27017";
-const database="mongodb-demo"
-const client=new MongoClient(uri);
+// // dbConnect().then((res)=>{
+// //     res.find().toArray().then((data)=>{
+// //         console.log(data);
+// //     })
 
-async function getData(){
-    const result = await client.connect();
-    const db = result.db(database);
-    console.log("Database Connected");
-    const collection = db.collection("players");
-    // const response = await collection.find().toArray();
+// // });
 
-    return collection;
-    console.log(response);
+// const findData=async()=>{
+//     let data = await dbConnect();
+//     data = await data.find().toArray();
+//     console.log(data);
+// }
+
+// findData(); 
+
+async function fetchData() {
+    try {
+        let collection = await dbConnect();
+        const data = await collection.find().toArray();
+        console.log("Fetched Data:", data);
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    } finally {
+       console.log("Completed...") // Exit the process after fetching data
+    }
 }
 
-// getData().then((res)=>{
-//     res.find().toArray().then((data)=>{
-//         console.log(data);
-//     })
-// });
-
-const findData=async()=>{
-    let data = await getData();
-    data = await data.find().toArray();
-    console.log(data);
-}
-
-findData();
+fetchData();
