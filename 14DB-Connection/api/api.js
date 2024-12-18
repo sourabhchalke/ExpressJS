@@ -24,4 +24,14 @@ app.post('/postData',async(req,res)=>{
     res.send(req.body);
 })
 
+//Using put method for updating entries
+app.put('/putData',async(req,res)=>{
+    let db = await dbConnect();
+    response=await db.updateOne(
+        {name:"Oppo O10"},
+        {$set:{price:10000}}
+    )
+    res.send(response);
+})
+
 app.listen(PORT);
