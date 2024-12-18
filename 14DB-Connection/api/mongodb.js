@@ -10,9 +10,10 @@ async function dbConnect(){
     console.log("Connected to Database");
     const result = datab.collection('products');
     console.log("Connected to Collection");
-    const response =await result.find().toArray();
-    console.log(response);
+    // const response =await result.find().toArray();
+    // console.log(response);
+    return result;
 
 }
 
-dbConnect();
+module.exports=dbConnect;
