@@ -34,4 +34,13 @@ app.put('/putData',async(req,res)=>{
     res.send(response);
 })
 
+//Deleting entry 
+app.delete('/deleteData',async(req,res)=>{
+    let db = await dbConnect();
+    response = await db.deleteOne(
+        {price:13000}
+    )
+    res.send(response);
+})
+
 app.listen(PORT);
