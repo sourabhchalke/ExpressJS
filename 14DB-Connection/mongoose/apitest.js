@@ -45,5 +45,19 @@ app.put('/put/:name',async(req,res)=>{
     }
 })
 
+app.delete('/delete',async(req,res)=>{
+    const {name}=req.body;
+    console.log(name);
+    
+    try{
+
+        const deleteData=await User.deleteOne({name:name});
+        console.log(deleteData);
+
+    }catch(error){
+        console.log(error.stack);
+    }
+})
+
 
 app.listen(PORT);
