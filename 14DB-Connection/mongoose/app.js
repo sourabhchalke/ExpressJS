@@ -94,17 +94,4 @@ async function deleteData() {
 
 // deleteData();
 
-app.put('/put/:name',async(req,res)=>{
-    try{
-        res.send(req.body);
-        const {name,address,mob_no}=req.body;
-        const updateData=await User.updateMany(
-            {name:name},
-            {$set:{address:address}},
-            {$set:{mob_no:mob_no}}
-        )
-        console.log(updateData);
-    }catch(error){
-        console.log(error.stack);
-    }
-})
+
