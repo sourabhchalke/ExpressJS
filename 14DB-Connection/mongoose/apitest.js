@@ -24,6 +24,11 @@ app.post('/post', async (req, res) => {
     }
 })
 
+app.get('/get', async (req, res) => {
+    res.send("Getting Data");
+    const getData = await User.find();
+    console.log(getData);
+});
 
 
 app.listen(PORT);

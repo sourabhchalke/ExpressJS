@@ -41,10 +41,10 @@ try {
 async function insertData() {
     try {
         const data = new Employee({
-            name: "Ram",
-            email: "ram@gmail.com",
-            password: "ram123",
-            age: 32
+            name: "Aniket",
+            email: "aniket@gmail.com",
+            password: "aniket123",
+            age: 27
         });
         const result = await data.save();
         console.log("Data Inserted:", result);
@@ -54,4 +54,57 @@ async function insertData() {
 }
 
 // Call the insertData function
-insertData();
+// insertData();
+
+async function getData() {
+    try {
+        const getData = await  Employee.find();
+        console.log(getData);
+    }catch(error){
+        console.error(error.stack);
+    }
+}
+
+// getData();
+
+async function updateData() {
+    try{
+        const updateData= await Employee.updateOne(
+            {name:"Aniket"},
+            {$set:{email:"aniketpatil@gmail.com"}}
+        )
+        console.log(updateData);
+    }catch(error){
+        console.error(error.stack);
+    }
+}
+
+// updateData();
+
+async function deleteData() {
+
+    try{
+        const deleteData=await Employee.deleteOne({name:"Vijay"});
+        console.log(deleteData);
+    }catch(error){
+        console.error(error.stack);
+    }
+    
+}
+
+// deleteData();
+
+app.put('/put/:name',async(req,res)=>{
+    try{
+        res.send(req.body);
+        const {name,address,mob_no}=req.body;
+        const updateData=await User.updateMany(
+            {name:name},
+            {$set:{address:address}},
+            {$set:{mob_no:mob_no}}
+        )
+        console.log(updateData);
+    }catch(error){
+        console.log(error.stack);
+    }
+})
