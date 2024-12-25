@@ -30,7 +30,14 @@ const userSchema = new mongoose.Schema({
 // Define the User model
 const Users = mongoose.model('passport_data', userSchema);
 
-
+// Middleware for session handling and Passport
+app.use(session({
+    secret: 'your-secret-key', // Change this to a secure secret key
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Passport Local Strategy
 passport.use(new LocalStrategy(
@@ -58,6 +65,20 @@ passport.use(new LocalStrategy(
         }
     }
 ));
+
+// Serialize and deserialize user
+passport.serializeUser((user, done) => {
+    done(null, user._id); // Serialize user by ID
+});
+
+passport.deserializeUser(async (id, done) => {
+    try {
+        const user = await Users.findById(id);
+        done(null, user);
+    } catch (error) {
+        done(error);
+    }
+});
 
 
 
