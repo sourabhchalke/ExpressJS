@@ -81,7 +81,6 @@ passport.deserializeUser(async (id, done) => {
 });
 
 
-
 // Login route
 app.post('/login',
     passport.authenticate('local', {

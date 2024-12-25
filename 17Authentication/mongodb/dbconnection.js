@@ -25,17 +25,5 @@ const registrationSchema = new mongoose.Schema(
         }
     }
 );
-module.exports=  mongoose.model('registration',registrationSchema);
-
-// const loginSchema=new mongoose.Schema({
-//     email:{
-//         type:String,
-//         required:true,
-//         unique:true
-//     },
-//     password:{
-//         type:String,
-//         unique:true
-//     }
-// });
-// module.exports= mongoose.model('login',loginSchema);
+const dbconnection =  mongoose.model('registration',registrationSchema);
+module.exports=dbconnection;
