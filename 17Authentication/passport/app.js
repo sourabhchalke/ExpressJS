@@ -27,3 +27,34 @@ const userSchema = new mongoose.Schema({
     age: { type: Number }
 });
 
+// Define the User model
+const Users = mongoose.model('passport_data', userSchema);
+
+
+
+// Login route
+app.post('/login',
+    passport.authenticate('local', {
+        successRedirect: '/dashboard',
+        failureRedirect: '/login-failure'
+    })
+);
+
+// Dashboard route (protected)
+app.get('/dashboard', (req, res) => {
+    if (req.isAuthenticated()) {
+        res.send("Welcome to the Dashboard!");
+    } else {
+        res.redirect('/login');
+    }
+});
+
+// Login failure route
+app.get('/login-failure', (req, res) => {
+    res.send("Login failed. Please try again.");
+});
+
+// Start the server
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
