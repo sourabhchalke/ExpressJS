@@ -32,6 +32,35 @@ const Users = mongoose.model('passport_data', userSchema);
 
 
 
+// Passport Local Strategy
+passport.use(new LocalStrategy(
+    async (username, password, done) => {
+        console.log(username,password);
+        try {
+            const user = await Users.findOne({ username});
+            console.log(user);
+            // if (!user.username) {
+            //     return done(null, false, { message: 'User not found' });
+            // }
+            // // Compare hashed password
+            // const isMatch = await bcrypt.compare(password, user.password);
+            // if (!isMatch) {
+            //     return done(null, false, { message: 'Incorrect password' });
+            // }
+
+            if(user){return done(null, user);}
+            else{console.log("User not found")}
+
+            // return done(null,user);
+            
+        } catch (err) {
+            return done(err);
+        }
+    }
+));
+
+
+
 // Login route
 app.post('/login',
     passport.authenticate('local', {
