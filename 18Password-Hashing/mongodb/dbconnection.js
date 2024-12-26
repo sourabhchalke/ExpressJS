@@ -16,7 +16,7 @@ const userSchema=new mongoose.Schema({
     age:{
         type:Number,
     },
-});
+}, { collection: 'password_hashing' });
 
 const User= new mongoose.model('password_hashing',userSchema);
 module.exports=User;
