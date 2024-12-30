@@ -10,11 +10,12 @@ router.get('/registration', (req, res) => {
 // Handle form submission
 router.post('/registration', async (req, res) => {
     try {
-        const { first_name, last_name, username, email, password } = req.body;
+        const { firstname, lastname, username, email, password } = req.body;
         console.log(req.body); // Log form data
+        console.log(firstname,lastname,username,email,password);
 
         // Add database logic here, e.g., save to MongoDB
-        const newUser = new registerSchema({ first_name, last_name, username, email, password });
+        const newUser = new registerSchema({ firstname, lastname, username, email, password });
         await newUser.save();
 
         console.log("Data submitted successfully");
