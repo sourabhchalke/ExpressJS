@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt=require('bcrypt');
+const bcrypt = require('bcrypt');
 const registerSchema = require('../mongodb/register'); // Assuming this is your Mongoose model
-const jwt=require('jsonwebtoken');
-const SECRET_KEY="sou";
+const jwt = require('jsonwebtoken');
+const SECRET_KEY = "sou";
+
+const localStorage = require('localStorage');
 
 
 // Render the registration form
@@ -28,26 +30,41 @@ router.post('/login', async (req, res) => {
         if (!findUser) {
             return res.status(404).send("User not found");
         }
-        
+
         // verify the password using bcrypt.compare
-        const hashedPassword= await bcrypt.compare(password,findUser.password);
+        const hashedPassword = await bcrypt.compare(password, findUser.password);
         console.log(hashedPassword);
-        if(!hashedPassword){
+        if (!hashedPassword) {
             return res.status(404).send("Password is wrong ");
         }
-        
+
         // Generate JWT Token
-        const token = jwt.sign({username:findUser.username,password:findUser.password},SECRET_KEY,{expiresIn:"1h"});
+        const token = jwt.sign({ username: findUser.username, password: findUser.password }, SECRET_KEY, { expiresIn: "1h" });
         console.log(token);
 
         // Set the token in an httpOnly cookie
-            res.cookie("login-token",token,
-                {
-                httpOnly:true,
-                maxAge:3600000
-            });
-        // }
+        // res.cookie("login-token",token,
+        //     {
+        //     httpOnly:true,
+        //     maxAge:3600000
+        // });
+
+        //Set the token in local storage
+        try {
+            localStorage.setItem('token', token);
+        } catch (err) {
+            return res.status(403).send(err);
+        }
+
         res.send("Welcome to dashboard");
+
+        const retrieveToken = localStorage.getItem('token', token);
+        console.log("Local Storage Token : ", retrieveToken);
+
+        if (retrieveToken) {
+             localStorage.removeItem("token", token);
+            console.log("Token Deleted");
+        }
 
     } catch (error) {
         res.send(error.stack);
@@ -55,10 +72,12 @@ router.post('/login', async (req, res) => {
 
 })
 
+
+
 // Middleware to verify token
 function verifyToken(req, res, next) {
     const token = req.cookies['login-token']; // Retrieve the token from cookies
-    console.log("From Req.cookies",token);
+    console.log("From Req.cookies", token);
 
     if (!token) {
         return res.status(401).send("Access denied. No token provided.");
