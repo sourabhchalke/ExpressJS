@@ -27,6 +27,15 @@ const forgetPassword= async(req,res)=>{
 
         const token =  jwt.sign({email},SECRET_KEY,{expiresIn:"1h"});
 
+        const client="http://localhost:8035";
+        const receiver={
+            from:"sourabhchalke2157@gmail.com",
+            to:email,
+            subject:"Password Reset Request",
+            text:`Click on this link to generate your new password ${client}/reset-password:${token}`
+        }
+
+        await transport.sendMail(receiver);
 
         return res.send("Success");
 
