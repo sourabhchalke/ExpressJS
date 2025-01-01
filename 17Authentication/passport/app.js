@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
-const bcrypt = require('bcrypt');
+
 const url = "mongodb://localhost:27017/authentication";
 
 const app = express();
@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     age: { type: Number }
-});
+},{collection:"passport_data"});
 
 // Define the User model
 const Users = mongoose.model('passport_data', userSchema);
@@ -46,14 +46,14 @@ passport.use(new LocalStrategy(
         try {
             const user = await Users.findOne({ username});
             console.log(user);
-            // if (!user.username) {
-            //     return done(null, false, { message: 'User not found' });
-            // }
-            // // Compare hashed password
-            // const isMatch = await bcrypt.compare(password, user.password);
-            // if (!isMatch) {
-            //     return done(null, false, { message: 'Incorrect password' });
-            // }
+            if (!user) {
+                return done(null, false, { message: 'User not found' });
+            }
+            // Compare hashed password
+            
+            if (password!==user.password) {
+                return done(null, false, { message: 'Incorrect password' });
+            }
 
             if(user){return done(null, user);}
             else{console.log("User not found")}
@@ -82,7 +82,7 @@ passport.deserializeUser(async (id, done) => {
 
 
 // Login route
-app.post('/login',
+app.post('/login-passport',
     passport.authenticate('local', {
         successRedirect: '/dashboard',
         failureRedirect: '/login-failure'
@@ -94,7 +94,7 @@ app.get('/dashboard', (req, res) => {
     if (req.isAuthenticated()) {
         res.send("Welcome to the Dashboard!");
     } else {
-        res.redirect('/login');
+        res.redirect('/login-passport');
     }
 });
 

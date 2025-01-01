@@ -8,6 +8,7 @@ const SECRET_KEY = "sou";
 const localStorage = require('localStorage');
 
 
+
 // Render the registration form
 router.get('/login', (req, res) => {
     res.render('login');
@@ -43,28 +44,31 @@ router.post('/login', async (req, res) => {
         console.log(token);
 
         // Set the token in an httpOnly cookie
-        // res.cookie("login-token",token,
-        //     {
-        //     httpOnly:true,
-        //     maxAge:3600000
-        // });
+        res.cookie("login-token",token,
+            {
+            httpOnly:true,
+            maxAge:3600000
+        });
 
         //Set the token in local storage
-        try {
-            localStorage.setItem('token', token);
-        } catch (err) {
-            return res.status(403).send(err);
-        }
+        // try {
+        //     localStorage.setItem('token', token);
+        // } catch (err) {
+        //     return res.status(403).send(err);
+        // }
 
-        res.send("Welcome to dashboard");
+        // res.send("Welcome to dashboard");
 
-        const retrieveToken = localStorage.getItem('token', token);
-        console.log("Local Storage Token : ", retrieveToken);
+        // const retrieveToken = localStorage.getItem('token', token);
+        // console.log("Local Storage Token : ", retrieveToken);
 
-        if (retrieveToken) {
-             localStorage.removeItem("token", token);
-            console.log("Token Deleted");
-        }
+        // if (retrieveToken) {
+        //      localStorage.removeItem("token", token);
+        //     console.log("Token Deleted");
+        // }
+
+
+         res.status(200).send("Welcome to Dashboard");
 
     } catch (error) {
         res.send(error.stack);
