@@ -4,7 +4,8 @@ const PORT=8035;
 const mongoose=require('mongoose');
 const register=require('./routes/registration.js');
 const login=require('./routes/login.js');
-const forgetPassword=require('./routes/forgetpassword.js');
+const {forgetPassword,resetPassword}=require('./routes/forgetpassword.js');
+
 const cookieParser = require('cookie-parser');
 const url="mongodb://localhost:27017/authentication";
 
@@ -22,6 +23,7 @@ mongoose.connect(url)
 app.use('/',register);
 app.use('/',login);
 app.use('/forget-password',forgetPassword);
+app.use('/reset-password',resetPassword);
 
 
 app.listen(PORT,()=>{console.log(`Server running on PORT : ${PORT}`)});

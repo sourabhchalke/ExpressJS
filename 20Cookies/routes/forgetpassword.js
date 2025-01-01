@@ -2,6 +2,7 @@ const jwt=require('jsonwebtoken');
 const nodemailer=require('nodemailer');
 const dbConnection=require('../mongodb/register');
 const SECRET_KEY="reset-password";
+const bcrypt=require('bcrypt');
 const forgetPassword= async(req,res)=>{
     try {
         
@@ -27,12 +28,12 @@ const forgetPassword= async(req,res)=>{
 
         const token =  jwt.sign({email},SECRET_KEY,{expiresIn:"1h"});
 
-        const client="http://localhost:8035";
+        const client=`http://localhost:8035/reset-password:${token}`;
         const receiver={
             from:"sourabhchalke2157@gmail.com",
             to:email,
             subject:"Password Reset Request",
-            text:`Click on this link to generate your new password ${client}/reset-password:${token}`
+            text:`Click on this link to generate your new password :${client}`
         }
 
         await transport.sendMail(receiver);
@@ -44,4 +45,33 @@ const forgetPassword= async(req,res)=>{
     }
 }
 
-module.exports=forgetPassword;
+const resetPassword=async(req,res)=>{
+    try{
+        // const token = req.params;
+        const token = req.headers.authorization?.split(' ')[1] || req.body.token || req.query.token;
+        const password=req.body.password;
+
+        if(!password){
+            res.status(400).send("Please provide password");
+        }
+
+        const decode = jwt.verify(token,SECRET_KEY);
+
+        const user = await dbConnection.findOne({email:decode.email});
+
+        const hashedPassword= await bcrypt.hash(password,10);
+        user.password=hashedPassword;
+
+        await user.save();
+
+        return res.status(200).send("Password reset successfull");
+
+    }catch(error){
+        res.send(error.stack);
+    }
+}
+
+module.exports={
+    forgetPassword,
+    resetPassword
+};
