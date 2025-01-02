@@ -15,11 +15,19 @@ app.use(express.json()); // Parses incoming JSON payloads
 app.use(express.urlencoded({ extended: true })); // Parses URL-encoded payloads (from forms)
 app.use(cookieParser());
 
-app.use(morgan('combined'));
-app.use(morgan('common'));
-app.use(morgan('dev'));
-app.use(morgan('tiny'));
-app.use(morgan('short'));
+const fs=require('fs');
+const path = require('path');
+// Morgan supports various predefined log formats
+// app.use(morgan('combined'));
+// app.use(morgan('common'));
+// app.use(morgan('dev'));
+// app.use(morgan('tiny'));
+// app.use(morgan('short'));
+
+var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
+ 
+// setup the logger
+app.use(morgan('combined', { stream: accessLogStream }))
 
 
 mongoose.connect(url)
