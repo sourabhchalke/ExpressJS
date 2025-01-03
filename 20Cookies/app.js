@@ -17,21 +17,30 @@ app.use(cookieParser());
 
 const fs=require('fs');
 const path = require('path');
-// Morgan supports various predefined log formats
+//1. Morgan supports various predefined log formats
 // app.use(morgan('combined'));
 // app.use(morgan('common'));
 // app.use(morgan('dev'));
 // app.use(morgan('tiny'));
 // app.use(morgan('short'));
 
-// // create a write stream (in append mode)
+// //2. create a write stream (in append mode)
 // var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
- 
 // // setup the logger
 // app.use(morgan('combined', { stream: accessLogStream }))
 
-// Custom Format String
-app.use(morgan(':method :url :status :res[content-length] :response-time ms'));
+// //3. Custom Format String
+// app.use(morgan(':method :url :status :res[content-length] :response-time ms'));
+
+// Custom Function:
+app.use(morgan((tokens,req,res)=>{
+    return[
+        tokens.method(req,res),
+        tokens.url(req,res),
+        tokens.status(req,res),
+        tokens['response-time'](req,res),'ms',
+    ].join('');
+}))
 
 mongoose.connect(url)
 .then(()=>{console.log("Database Connected")})
