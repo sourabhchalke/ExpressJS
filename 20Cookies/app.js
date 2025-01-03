@@ -24,11 +24,14 @@ const path = require('path');
 // app.use(morgan('tiny'));
 // app.use(morgan('short'));
 
-var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
+// // create a write stream (in append mode)
+// var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
  
-// setup the logger
-app.use(morgan('combined', { stream: accessLogStream }))
+// // setup the logger
+// app.use(morgan('combined', { stream: accessLogStream }))
 
+// Custom Format String
+app.use(morgan(':method :url :status :res[content-length] :response-time ms'));
 
 mongoose.connect(url)
 .then(()=>{console.log("Database Connected")})
